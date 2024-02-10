@@ -101,7 +101,7 @@ const calculatePosition = (event, parentPosition) => {
 
 const mergeEventElements = async (events) => {
   const getStyle = () => new Promise(res => chrome.storage.local.get('style', (s) => res(s.style)));
-  const fill_style = await getStyle()
+  const fill_style = await getStyle() ?? 'candy_cane';
   // disabling this as it changes the orders of the events making clicking on the now transparent divs not be in the correct order
   // events.sort((e1, e2) => dragType(e1) - dragType(e2));
   const colors = events.map(event => {
@@ -161,7 +161,7 @@ const mergeEventElements = async (events) => {
       borderColor: eventToKeep.style.borderColor,
       textShadow: eventToKeep.style.textShadow,
     };
-    eventToKeep.style.backgroundImage = fillOptions[fill_style](colors)
+    eventToKeep.style.backgroundImage = fillOptions[fill_style](colors);
     eventToKeep.style.backgroundSize = 'initial';
     eventToKeep.style.left = Math.min.apply(Math, positions.map(s => s.left)) + 'px';
     eventToKeep.style.right = Math.min.apply(Math, positions.map(s => s.right)) + 'px';
@@ -211,13 +211,12 @@ const resetMergedEvents = (events) => {
 }
 
 function findMatchingString(eventSets, string_1, wildcard) {
-  const stripped_wildcard = wildcard.replace(/^\/|\/$/g, ''); // Remove leading and trailing slashes if there are any
-  const user_regex_pattern = new RegExp(stripped_wildcard, 'i'); // make it case insensitive
-  const regex_pattern = string_1.replace(user_regex_pattern, ".*") // replace wildcard with regex wildcard (.*)
+  const [prefix, suffix] = string_1.split(wildcard);
+  const regexPattern = new RegExp(`${prefix}.*${suffix}`.replace(/[-[\]{}()*+?.,\\^$|]/g, "\\$&"));
   const array = Object.keys(eventSets);
 
   for (const str of array) {
-      if (str.match(regex_pattern)) {
+      if (str.match(regexPattern)) {
         return str;
     }
   }
@@ -239,11 +238,11 @@ const merge = async (mainCalender) => {
       }
       let eventKey = Array.from(eventTitleEls).map(el => el.textContent).join('').replace(/\\s+/g,'');
       eventKey = index + '_' + eventKey + event.style.height;
-      const wildcard_match_to_existing_key = wildcard ? findMatchingString(eventSets, eventKey, wildcard) : null;
-      // if the wildcard event is a match to an existing key, then add it to that key
+      const busy_match_to_existing_key = wildcard ? findMatchingString(eventSets, eventKey, wildcard) : null;
+      // if the busy event is a match to an existing key, then add it to that key
       // rather than creating a new key
-      if (wildcard_match_to_existing_key) {
-        eventSets[wildcard_match_to_existing_key].push(event);
+      if (busy_match_to_existing_key) {
+        eventSets[busy_match_to_existing_key].push(event);
       } else {
         eventSets[eventKey] = eventSets[eventKey] || [];
         eventSets[eventKey].push(event);

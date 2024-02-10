@@ -2,7 +2,7 @@
   "name": "__MSG_appName__",
   "description": "__MSG_appDesc__",
   "default_locale": "en",
-  "version": "2.3.6",
+  "version": "2.3.5",
   "content_scripts":[{
     "matches": [
         "https://www.google.com/calendar/*",
@@ -27,5 +27,11 @@
     "48": "icon.png"
   },
   "content_security_policy": {"default-src": "self"},
-  "manifest_version": 3
+  "manifest_version": 3,
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "gcal-multical-event-merge@edited.example.com",
+      "strict_min_version": "42.0"
+      }
+  }
 }
