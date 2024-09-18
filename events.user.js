@@ -236,7 +236,17 @@ const merge = async (mainCalender) => {
       if (!eventTitleEls.length) {
         return;
       }
-      let eventKey = Array.from(eventTitleEls).map(el => el.textContent).join('').replace(/\\s+/g,'');
+      let eventKey = '';
+      eventTitleEls.forEach(el => {
+        if (!el.children?.length) return;
+        const containerEl = el.children[0];
+        // The location sometimes does not match: one will have the name + address, while the other
+        // only has the name. Not sure why, but it prevents those events from merging.
+        const [titleEl, timeEl, _locationEl] = containerEl.children;
+        const partialKey = titleEl?.textContent + timeEl?.textContent;
+        eventKey += partialKey;
+      });
+      eventKey = eventKey.replace(/\\s+/g, '');
       eventKey = index + '_' + eventKey + event.style.height;
       const busy_match_to_existing_key = wildcard ? findMatchingString(eventSets, eventKey, wildcard) : null;
       // if the busy event is a match to an existing key, then add it to that key

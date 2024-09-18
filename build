@@ -1,2 +1,1 @@
 find . -path '*/.*' -prune -o -type f -print | zip ./gcal-multical-event-merge.zip -@
-#echo "On Windows, open this directory in Explorer, select the files, right-click, 7z > Add to zip. Then rename the file to xpi."
