@@ -55,24 +55,21 @@
         }
     </style>
     <body>
-        <p id="version" ></p>
-        <h1>Cal Merge for <br>Google Calendar<sup style="font-size: 50%;">TM</sup></h1>
-        <h4>By <a href="https://github.com/hcawn/gcal-multical-event-merge/" target="_blank" >HCAWN</a></h4><h5>Forked from <a href="https://github.com/imightbeamy/gcal-multical-event-merge" target="_blank" >imightbeamy</a></h5>
-        <div class="table" >
-            <div class="row" >
-                <div class="cell left" >
-                    Enable
-                </div>
-                <div class="cell right" >
-                    <input id="toggle_enabled" type="checkbox">
+        <p id="version"></p>
+        <h1>Cal Merge for <br />Google Calendar<sup style="font-size: 50%">TM</sup></h1>
+        <h4>By <a href="https://github.com/hcawn/gcal-multical-event-merge/" target="_blank" style="color: black">HCAWN</a></h4>
+        <h5>Forked from <a href="https://github.com/imightbeamy/gcal-multical-event-merge" target="_blank" style="color: black">imightbeamy</a></h5>
+        <div class="table">
+            <div class="row">
+                <div class="cell left">Enable</div>
+                <div class="cell right">
+                    <input id="toggle_enabled" type="checkbox" />
                 </div>
             </div>
-            <div class="row" >
-                <div class="cell left" >
-                    Style
-                </div>
-                <div class="cell right" >
-                    <select id="select_style" >
+            <div class="row">
+                <div class="cell left">Style</div>
+                <div class="cell right">
+                    <select id="select_style">
                         <option value="vertical_bands">Vertical bands (default)</option>
                         <option value="candy_cane">Candy cane (old)</option>
                         <option value="smooth_vertical_bands">Smooth vertical bands</option>
@@ -80,15 +77,17 @@
                     </select>
                 </div>
             </div>
-            <div class="row" >
-                <div class="cell left" title="An event with this word in the title will match with any other title.&#10;'busy' is a common use case for this feature.&#10;Clear the textbox if you are getting undesirable results" >
+            <div class="row">
+                <div
+                    class="cell left"
+                    title="An event with this word in the title will match with any other title.&#10;'busy' is a common use case for this feature.&#10;Use the pipe character | to make multiple wildcards. e.g: 'busy|another'&#10;Clear the textbox if you are getting undesirable results"
+                >
                     Wildcard
                 </div>
-                <div class="cell right" >
-                    <input id="wildcard_value" style="width: 150px;" type="text" placeholder="wildcard" value="busy">
+                <div class="cell right">
+                    <input id="wildcard_value" style="width: 150px" type="text" placeholder="wildcard" value="busy" />
                 </div>
             </div>
         </div>
-
     </body>
 </html>
