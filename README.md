@@ -22,3 +22,5 @@ Forked from [@imightbeamy's repo](https://github.com/imightbeamy/gcal-multical-e
 ### Build
 
 Run `build` or `build_windows` to create zip file for Chrome and FF.
+
+From git bash, run `cmd "/c build_windows"`

@@ -278,18 +278,21 @@ const merge = async mainCalender => {
             if (!eventTitleEls.length) {
                 return
             }
-            let eventKey = '';
+            const eventKeyParts = [];
+            eventKeyParts.push(index);
+            eventKeyParts.push("_");
             eventTitleEls.forEach(el => {
-              if (!el.children?.length) return;
-              const containerEl = el.children[0];
-              // The location sometimes does not match: one will have the name + address, while the other
-              // only has the name. Not sure why, but it prevents those events from merging.
-              const [titleEl, timeEl, _locationEl] = containerEl.children;
-              const partialKey = titleEl?.textContent + timeEl?.textContent;
-              eventKey += partialKey;
+                if (!el.children?.length) return;
+                const containerEl = el.children[0];
+                // The location sometimes does not match: one will have the name + address, while the other
+                // only has the name. Not sure why, but it prevents those events from merging.
+                const [titleEl, timeEl, _locationEl] = containerEl.children;
+                eventKeyParts.push(titleEl?.textContent);
+                eventKeyParts.push(timeEl?.textContent);
             });
-            eventKey = eventKey.replace(/\\s+/g, '');
-            eventKey = index + "_" + eventKey + event.style.height
+            eventKeyParts.push(event.style.height);
+            // filter out any null, undefined, or empty strings (or 0, that's fine in practice), then remove any whitespace
+            const eventKey = eventKeyParts.filter(x => x).join("").replace(/\s+/g, "");
             const wildcard_match_to_existing_key = wildcard ? findMatchingString(eventSets, eventKey, wildcard) : null
             // if the wildcard event is a match to an existing key, then add it to that key
             // rather than creating a new key
