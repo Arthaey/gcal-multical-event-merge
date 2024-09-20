@@ -328,7 +328,8 @@ let otherEventsMoved = []
 const moveEvents = (events, from_top) => {
     if (!otherEventsMoved.includes(events[0])) {
         // if parent has roll = "presentation" then do not move as it is a day column
-        if (events[0].parentElement.getAttribute("role") === "presentation") {
+        // recent change to google cal means I now have to look to the parents parent and look for gridcell role.
+        if (["gridcell", "presentation"].includes(events[0].parentElement.parentElement.getAttribute("role"))) {
             return
         }
         events[0].parentElement.style.top = `${from_top}em`
